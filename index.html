@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./src/css/styles.css">
+</head>
+<body>
+    <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="display-indicators">
+                <div class="figures-counter">
+                    <label for="number-of-figures">Number of current shapes:</label>
+                    <input type="text" id="number-of-figures">
+                </div>
+                <div class="total-area">
+                    <label for="total-area-of-figures">Surface area occupied by shapes:</label>
+                    <input type="text" id="total-area-of-figures">
+                </div>
+            </div>
+            <div class="canvas-wrapper">
+
+            </div>
+            <div class="control-panel-wrapper">
+                <div class="generation-rate">
+                    <p>Number of shapes per sec:</p>
+                    <button data-action="reduceGenerationRate">-</button>
+                    <button data-action="increaseGenerationRate">+</button>
+                </div>
+                <div class="gravity">
+                    <p>Gravity Value:</p>
+                    <button data-action="reduceGravity">-</button>
+                    <button data-action="increaseGravity">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="./dist/bundle.js"></script>
+</body>
+</html>

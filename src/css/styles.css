@@ -1,0 +1,14 @@
+body {
+    margin: 30px 0;
+}
+
+.canvas-wrapper {
+    text-align: center;
+}
+
+.display-indicators,
+.control-panel-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
