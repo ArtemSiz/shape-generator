@@ -1,17 +1,14 @@
 import figuresModel from './appModel'
 import figuresView from "./appView";
 
-class Controller {
+class Controller implements PControllerInterface {
 
-  constructor() {
-    // this.figuresModel = figuresModel;
-  }
+  // clearFigure() {
+  //   this.clear();
+  //   // console.log('clearFigure()');
+  // }
 
-  clearFigure() {
-    this.clear();
-  }
-
-  onCreateFigure(e) {
+  onCreateFigure(e: any) {
     figuresModel.newPosition = true;
     figuresModel[figuresModel.changeFigure()](e.data.global);
   }
@@ -35,17 +32,17 @@ class Controller {
     figuresView.gravity++;
   }
 
-  onClick(event) {
-    let action = event.target.dataset.action;
+  onClick = (event: MouseEvent) => {
+    let action = (event.target as HTMLElement).dataset.action;
     if (action) {
-      this[action]();
+    (this as any)[action]();
     }
   }
 }
 
-const figuresController = new Controller();
+const figuresController: any = new Controller();
 
-const controlPanel = document.querySelector('.control-panel-wrapper');
+const controlPanel: HTMLDivElement = <HTMLDivElement>document.querySelector('.control-panel-wrapper');
 controlPanel.addEventListener('click', (e) => figuresController.onClick(e));
 
 export default figuresController;

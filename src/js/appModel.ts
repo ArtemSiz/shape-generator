@@ -2,10 +2,21 @@ import * as PIXI from 'pixi.js';
 
 import figuresController from './appController';
 
-class Model {
-  constructor() {
+class Model implements PModelInterface {
 
-    this.figuresController = figuresController;
+  width: number;
+  height: number;
+  app: PIXI.Application;
+  background: PIXI.Sprite;
+  colors: number[];
+  typesFigures: string[];
+  coordX: number;
+  coordY: number;
+  figure: PIXI.Graphics[];
+  figuresAmount: number;
+  areaOfAllFigures: number;
+
+  constructor() {
 
     this.width = 800;
     this.height = 400;
@@ -34,18 +45,19 @@ class Model {
 
   rand = () => Math.floor(Math.random() * this.colors.length);
 
-  _basicBehavior(shape) {
+  _basicBehavior(shape: any) {
     shape.interactive = true;
     shape.buttonMode = true;
     this.figuresAmount++;
     shape.num = this.figuresAmount;
     this.figure.push(shape);
     this.app.stage.addChild(shape);
-    shape.on('pointerdown', figuresController.clearFigure);
+    // shape.on('pointerdown', figuresController.clearFigure.bind(this));
+    shape.on('pointerdown', () => shape.clear());
   }
 
-  _checkedCoordinates = (coordinates) => {
-    let newCoord = {};
+  _checkedCoordinates = (coordinates: {}) => {
+    let newCoord: any = {};
 
     if (Object.keys(coordinates).length === 0) {
       newCoord.x = Math.floor(Math.random() * this.coordX);
@@ -58,7 +70,8 @@ class Model {
 
   };
 
-  changeFigure = () => {
+
+  changeFigure = ():string => {
     return this.typesFigures[Math.floor(Math.random() * this.typesFigures.length)];
   };
 
@@ -165,6 +178,6 @@ class Model {
   }
 }
 
-const figuresModel = new Model();
+const figuresModel: any = new Model();
 
 export default figuresModel;

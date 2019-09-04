@@ -1,19 +1,23 @@
 import figuresModel from './appModel';
 
-class View {
-  constructor() {
-    // this.figuresModel = figuresModel;
+class View implements PViewInterface {
 
+  gravity: number;
+  generationRate: number;
+  displayNumberOfFigures: HTMLInputElement;
+  displayAreaOfAllFigures: HTMLInputElement;
+  interval: any;
+
+  constructor() {
     this.gravity = 4;
     this.generationRate = 500;
-    this.displayNumberOfFigures = document.getElementById('number-of-figures');
-    this.displayAreaOfAllFigures = document.getElementById('total-area-of-figures');
+    this.displayNumberOfFigures = <HTMLInputElement>document.getElementById('number-of-figures');
+    this.displayAreaOfAllFigures = <HTMLInputElement>document.getElementById('total-area-of-figures');
     this.interval = null;
   }
 
   createCanvas() {
-    console.log('figuresModel.app.view=', figuresModel);
-    document.querySelector('.canvas-wrapper').appendChild(figuresModel.app.view);
+    document.querySelector<any>('.canvas-wrapper').appendChild(figuresModel.app.view);
   }
 
   _updateDisplay() {
@@ -28,10 +32,10 @@ class View {
   }
 
   loadGame() {
-    console.log('loadGame 7');
     this.createCanvas();
     figuresModel[figuresModel.changeFigure()]();
     this.onSetInterval();
+    // figuresModel.app.ticker.elapsedMS = this.generationRate;
 
     figuresModel.app.ticker.add(() => {
       for (let i = 0; i < figuresModel.figuresAmount; i++) {
@@ -41,6 +45,6 @@ class View {
   }
 }
 
-const figuresView = new View();
+const figuresView: View = new View();
 
 export default figuresView;
