@@ -82,7 +82,7 @@ class Model implements PModelInterface {
     let radius = 50;
 
     let newCoord = this._checkedCoordinates(coord);
-    let { x, y } = newCoord;
+    let  { x, y } = newCoord;
 
     circle.lineStyle(0);
     circle.beginFill(this.colors[randColor], 1);

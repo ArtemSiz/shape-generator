@@ -38,6 +38,7 @@ class View implements PViewInterface {
     // figuresModel.app.ticker.elapsedMS = this.generationRate;
 
     figuresModel.app.ticker.add(() => {
+      console.log('ticker 7');
       for (let i = 0; i < figuresModel.figuresAmount; i++) {
         figuresModel.figure[i].position.y += this.gravity;
       }

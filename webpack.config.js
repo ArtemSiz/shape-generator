@@ -1,8 +1,7 @@
 const path = require('path');
 
-module.exports = {
-  entry: './src/js/index.ts',
-  mode: 'production',
+let conf = {
+  entry: './src/ts/index.ts',
   resolve: {
     extensions: ['.js', '.ts', '.tsx']
   },
@@ -25,10 +24,22 @@ module.exports = {
       }
     ]
   },
-  watch: true,
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: 'dist/'
   },
-  devtool: 'source-map'
+  devServer: {
+    overlay: true
+  }
+};
+
+module.exports = (env, options) => {
+  let production = options.mode === 'production';
+
+  conf.devtool = production
+                    ? false
+                    : 'eval-sourcemap';
+
+  return conf;
 };
