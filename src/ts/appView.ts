@@ -20,7 +20,7 @@ class View implements PViewInterface {
     document.querySelector<any>('.canvas-wrapper').appendChild(figuresModel.app.view);
   }
 
-  _updateDisplay() {
+  updateDisplay() {
     figuresModel[figuresModel.changeFigure()]();
     this.displayNumberOfFigures.value = figuresModel.figuresAmount;
     this.displayAreaOfAllFigures.value = figuresModel.areaOfAllFigures;
@@ -28,7 +28,7 @@ class View implements PViewInterface {
 
   onSetInterval() {
     if (this.interval) clearInterval(this.interval);
-    this.interval = setInterval(() => this._updateDisplay(), this.generationRate);
+    this.interval = setInterval(() => this.updateDisplay(), this.generationRate);
   }
 
   loadGame() {
@@ -38,7 +38,7 @@ class View implements PViewInterface {
     // figuresModel.app.ticker.elapsedMS = this.generationRate;
 
     figuresModel.app.ticker.add(() => {
-      console.log('ticker 7');
+      console.log('ticker 9');
       for (let i = 0; i < figuresModel.figuresAmount; i++) {
         figuresModel.figure[i].position.y += this.gravity;
       }

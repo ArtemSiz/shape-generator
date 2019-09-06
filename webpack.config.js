@@ -1,16 +1,16 @@
 const path = require('path');
 
-let conf = {
+const conf = {
   entry: './src/ts/index.ts',
   resolve: {
-    extensions: ['.js', '.ts', '.tsx']
+    extensions: ['.js', '.ts', '.tsx'],
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.m?js$/,
@@ -18,28 +18,26 @@ let conf = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      }
-    ]
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
+    ],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: 'dist/'
+    publicPath: 'dist/',
   },
   devServer: {
-    overlay: true
-  }
+    overlay: true,
+  },
 };
 
 module.exports = (env, options) => {
-  let production = options.mode === 'production';
+  const production = options.mode === 'production';
 
-  conf.devtool = production
-                    ? false
-                    : 'eval-sourcemap';
+  conf.devtool = production ? false : 'eval-sourcemap';
 
   return conf;
 };

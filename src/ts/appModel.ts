@@ -1,39 +1,51 @@
-import * as PIXI from 'pixi.js';
+import { Application, Graphics, Sprite } from 'pixi.js';
+import CustomGraficsClass from './classes/customGrafics.class';
 
-import figuresController from './appController';
+// class CustomGraficsClass extends Graphics {
+//   num?: number;
+// }
 
 class Model implements PModelInterface {
-
   width: number;
+
   height: number;
-  app: PIXI.Application;
-  background: PIXI.Sprite;
+
+  app: Application;
+
+  background: Sprite;
+
   colors: number[];
+
   typesFigures: string[];
+
   coordX: number;
+
   coordY: number;
-  figure: PIXI.Graphics[];
+
+  figure: Graphics[];
+
   figuresAmount: number;
+
   areaOfAllFigures: number;
 
   constructor() {
-
     this.width = 800;
     this.height = 400;
 
-    this.app = new PIXI.Application({
+    this.app = new Application({
       width: this.width,
-      height: this.height
+      height: this.height,
     });
 
-    this.background = new PIXI.Sprite();
+    this.background = new Sprite();
 
     this.app.stage.addChild(this.background);
     this.background.width = this.app.screen.width;
     this.background.height = this.app.screen.height;
     this.app.stage.interactive = true;
 
-    this.colors = [0xFFFF0B, 0xFF700B, 0x4286f4, 0x4286f4, 0xf441e8, 0x8dff6d, 0x41ccc9, 0xe03375, 0x95e032, 0x77c687, 0x43ba5b, 0x0ea3ba];
+    this.colors = [0xFFFF0B, 0xFF700B, 0x4286f4, 0x4286f4, 0xf441e8, 0x8dff6d, 0x41ccc9, 0xe03375,
+      0x95e032, 0x77c687, 0x43ba5b, 0x0ea3ba];
     this.typesFigures = ['drawCircle', 'drawSquare', 'drawPolygon', 'drawPolygonSecond', 'drawEllipse', 'drawTriangle', 'drawStar'];
     this.coordX = this.width - 100;
     this.coordY = -200;
@@ -45,7 +57,7 @@ class Model implements PModelInterface {
 
   rand = () => Math.floor(Math.random() * this.colors.length);
 
-  _basicBehavior(shape: any) {
+  basicBehavior(shape: CustomGraficsClass) {
     shape.interactive = true;
     shape.buttonMode = true;
     this.figuresAmount++;
@@ -56,7 +68,7 @@ class Model implements PModelInterface {
     shape.on('pointerdown', () => shape.clear());
   }
 
-  _checkedCoordinates = (coordinates: {}) => {
+  checkedCoordinates = (coordinates: {}) => {
     let newCoord: any = {};
 
     if (Object.keys(coordinates).length === 0) {
@@ -67,92 +79,98 @@ class Model implements PModelInterface {
 
     newCoord = coordinates;
     return newCoord;
-
   };
 
 
   changeFigure = ():string => {
-    return this.typesFigures[Math.floor(Math.random() * this.typesFigures.length)];
+    const typeFigure = this.typesFigures[Math.floor(Math.random() * this.typesFigures.length)];
+    return typeFigure;
   };
 
   drawCircle(coord = {}) {
-    let circle = new PIXI.Graphics();
+    const circle = new Graphics();
 
-    let randColor = this.rand();
-    let radius = 50;
+    const randColor = this.rand();
+    const radius = 50;
 
-    let newCoord = this._checkedCoordinates(coord);
-    let  { x, y } = newCoord;
+    const newCoord = this.checkedCoordinates(coord);
+    const { x, y } = newCoord;
 
     circle.lineStyle(0);
     circle.beginFill(this.colors[randColor], 1);
 
     circle.drawCircle(x, y, radius);
     circle.endFill();
-    this._basicBehavior(circle);
-    let area = Math.floor(Math.PI * Math.pow(radius, 2));
+    this.basicBehavior(circle);
+    const area = Math.floor(Math.PI * (radius ** 2));
     this.areaOfAllFigures += area;
   }
-  drawSquare(coord = {}) {
-    let rectangle = new PIXI.Graphics();
-    let randColor = this.rand();
 
-    let newCoord = this._checkedCoordinates(coord);
-    let { x, y } = newCoord;
+  drawSquare(coord = {}) {
+    const rectangle = new Graphics();
+    const randColor = this.rand();
+
+    const newCoord = this.checkedCoordinates(coord);
+    const { x, y } = newCoord;
 
     rectangle.beginFill(this.colors[randColor], 1);
     rectangle.drawRect(x, y, 100, 100);
     rectangle.endFill();
-    this._basicBehavior(rectangle);
-    let area = Math.pow(100, 2);
+    this.basicBehavior(rectangle);
+    const area = (100 ** 2);
     this.areaOfAllFigures += area;
   }
+
   drawPolygon(coord = {}) {
-    let polygon = new PIXI.Graphics();
-    let randColor = this.rand();
+    const polygon = new Graphics();
+    const randColor = this.rand();
 
-    let newCoord = this._checkedCoordinates(coord);
-    let { x, y } = newCoord;
+    const newCoord = this.checkedCoordinates(coord);
+    const { x, y } = newCoord;
 
     polygon.beginFill(this.colors[randColor], 1);
-    polygon.drawPolygon([x, y, x + 100, y + 90, x + 180, y + 50, x + 130, y + 200, x - 10, y + 150]);
+    polygon.drawPolygon([x, y, x + 100, y + 90, x + 180, y + 50,
+      x + 130, y + 200, x - 10, y + 150]);
     polygon.endFill();
-    this._basicBehavior(polygon);
+    this.basicBehavior(polygon);
   }
+
   drawPolygonSecond(coord = {}) {
-    let polygon = new PIXI.Graphics();
-    let randColor = this.rand();
+    const polygon = new Graphics();
+    const randColor = this.rand();
 
-    let newCoord = this._checkedCoordinates(coord);
-    let { x, y } = newCoord;
+    const newCoord = this.checkedCoordinates(coord);
+    const { x, y } = newCoord;
 
     polygon.beginFill(this.colors[randColor], 1);
-    polygon.drawPolygon([x, y, x + 100, y + 90, x + 180, y + 50, x + 130, y + 200, x + 70, y + 130, x - 10, y + 150]);
+    polygon.drawPolygon([x, y, x + 100, y + 90, x + 180, y + 50,
+      x + 130, y + 200, x + 70, y + 130, x - 10, y + 150]);
     polygon.endFill();
-    this._basicBehavior(polygon);
+    this.basicBehavior(polygon);
   }
+
   drawEllipse(coord = {}) {
-    let ellipse = new PIXI.Graphics();
-    let randColor = this.rand();
+    const ellipse = new Graphics();
+    const randColor = this.rand();
 
 
-    let newCoord = this._checkedCoordinates(coord);
-    let { x, y } = newCoord;
+    const newCoord = this.checkedCoordinates(coord);
+    const { x, y } = newCoord;
 
     ellipse.beginFill(this.colors[randColor], 1);
     ellipse.drawEllipse(x, y, 80, 50);
     ellipse.endFill();
-    this._basicBehavior(ellipse);
+    this.basicBehavior(ellipse);
 
-    let area = Math.floor(Math.PI * 80 * 50);
+    const area = Math.floor(Math.PI * 80 * 50);
     this.areaOfAllFigures += area;
   }
-  drawTriangle(coord = {}) {
-    let triangle = new PIXI.Graphics();
-    let randColor = this.rand();
 
-    let newCoord = this._checkedCoordinates(coord);
-    let { x, y } = newCoord;
+  drawTriangle(coord = {}) {
+    const triangle = new Graphics();
+    const randColor = this.rand();
+    const newCoord = this.checkedCoordinates(coord);
+    const { x, y } = newCoord;
 
     triangle.beginFill(this.colors[randColor], 1);
     triangle.moveTo(x, y);
@@ -162,19 +180,20 @@ class Model implements PModelInterface {
     triangle.closePath();
     triangle.endFill();
 
-    this._basicBehavior(triangle);
+    this.basicBehavior(triangle);
   }
-  drawStar(coord = {}) {
-    let star = new PIXI.Graphics();
-    let randColor = this.rand();
 
-    let newCoord = this._checkedCoordinates(coord);
-    let { x, y } = newCoord;
+  drawStar(coord = {}) {
+    const star = new Graphics();
+    const randColor = this.rand();
+
+    const newCoord = this.checkedCoordinates(coord);
+    const { x, y } = newCoord;
 
     star.beginFill(this.colors[randColor], 1);
     star.drawStar(x, y, 5, 50);
     star.endFill();
-    this._basicBehavior(star);
+    this.basicBehavior(star);
   }
 }
 
