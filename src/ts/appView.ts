@@ -1,6 +1,7 @@
 import { Graphics } from 'pixi.js';
 
 import figuresModel from './appModel';
+import AbstractFigureClass from "./classes/abstractFigure.class";
 
 class View implements PViewInterface {
   gravity: number;
@@ -38,45 +39,41 @@ class View implements PViewInterface {
   }
 
   drawCircle(coord = {}) {
-    const circle = new Graphics();
-
     const randColor = figuresModel.rand();
     const radius = 50;
-
     const newCoord = figuresModel.checkedCoordinates(coord);
     const { x, y } = newCoord;
+    const circle = new AbstractFigureClass(x, y);
+    const area = Math.floor(Math.PI * (radius ** 2));
 
     circle.lineStyle(0);
     circle.beginFill(figuresModel.colors[randColor], 1);
-
     circle.drawCircle(x, y, radius);
     circle.endFill();
     figuresModel.basicBehavior(circle);
-    const area = Math.floor(Math.PI * (radius ** 2));
+
     figuresModel.areaOfAllFigures += area;
   }
 
   drawSquare(coord = {}) {
-    const rectangle = new Graphics();
     const randColor = figuresModel.rand();
-
     const newCoord = figuresModel.checkedCoordinates(coord);
     const { x, y } = newCoord;
+    const rectangle = new AbstractFigureClass(x, y);
+    const area = (100 ** 2);
 
     rectangle.beginFill(figuresModel.colors[randColor], 1);
     rectangle.drawRect(x, y, 100, 100);
     rectangle.endFill();
     figuresModel.basicBehavior(rectangle);
-    const area = (100 ** 2);
     figuresModel.areaOfAllFigures += area;
   }
 
   drawPolygon(coord = {}) {
-    const polygon = new Graphics();
     const randColor = figuresModel.rand();
-
     const newCoord = figuresModel.checkedCoordinates(coord);
     const { x, y } = newCoord;
+    const polygon = new AbstractFigureClass(x, y);
 
     polygon.beginFill(figuresModel.colors[randColor], 1);
     polygon.drawPolygon([x, y, x + 100, y + 90, x + 180, y + 50,
@@ -86,11 +83,10 @@ class View implements PViewInterface {
   }
 
   drawPolygonSecond(coord = {}) {
-    const polygon = new Graphics();
     const randColor = figuresModel.rand();
-
     const newCoord = figuresModel.checkedCoordinates(coord);
     const { x, y } = newCoord;
+    const polygon = new AbstractFigureClass(x, y);
 
     polygon.beginFill(figuresModel.colors[randColor], 1);
     polygon.drawPolygon([x, y, x + 100, y + 90, x + 180, y + 50,
@@ -100,27 +96,25 @@ class View implements PViewInterface {
   }
 
   drawEllipse(coord = {}) {
-    const ellipse = new Graphics();
     const randColor = figuresModel.rand();
-
-
     const newCoord = figuresModel.checkedCoordinates(coord);
     const { x, y } = newCoord;
+    const ellipse = new AbstractFigureClass(x, y);
+    const area = Math.floor(Math.PI * 80 * 50);
 
     ellipse.beginFill(figuresModel.colors[randColor], 1);
     ellipse.drawEllipse(x, y, 80, 50);
     ellipse.endFill();
     figuresModel.basicBehavior(ellipse);
 
-    const area = Math.floor(Math.PI * 80 * 50);
     figuresModel.areaOfAllFigures += area;
   }
 
   drawTriangle(coord = {}) {
-    const triangle = new Graphics();
     const randColor = figuresModel.rand();
     const newCoord = figuresModel.checkedCoordinates(coord);
     const { x, y } = newCoord;
+    const triangle = new AbstractFigureClass(x, y);
 
     triangle.beginFill(figuresModel.colors[randColor], 1);
     triangle.moveTo(x, y);
@@ -134,11 +128,10 @@ class View implements PViewInterface {
   }
 
   drawStar(coord = {}) {
-    const star = new Graphics();
     const randColor = figuresModel.rand();
-
     const newCoord = figuresModel.checkedCoordinates(coord);
     const { x, y } = newCoord;
+    const star = new AbstractFigureClass(x, y);
 
     star.beginFill(figuresModel.colors[randColor], 1);
     star.drawStar(x, y, 5, 50);
