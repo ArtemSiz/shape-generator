@@ -1,10 +1,6 @@
 import { Application, Graphics, Sprite } from 'pixi.js';
 import CustomGraficsClass from './classes/customGrafics.class';
 
-// class CustomGraficsClass extends Graphics {
-//   num?: number;
-// }
-
 class Model implements PModelInterface {
   width: number;
 
@@ -58,14 +54,15 @@ class Model implements PModelInterface {
   rand = () => Math.floor(Math.random() * this.colors.length);
 
   basicBehavior(shape: CustomGraficsClass) {
-    shape.interactive = true;
-    shape.buttonMode = true;
-    this.figuresAmount++;
-    shape.num = this.figuresAmount;
-    this.figure.push(shape);
-    this.app.stage.addChild(shape);
+    const newShape = shape;
+    newShape.interactive = true;
+    newShape.buttonMode = true;
+    this.figuresAmount += 1;
+    newShape.num = this.figuresAmount;
+    this.figure.push(newShape);
+    this.app.stage.addChild(newShape);
     // shape.on('pointerdown', figuresController.clearFigure.bind(this));
-    shape.on('pointerdown', () => shape.clear());
+    newShape.on('pointerdown', () => newShape.clear());
   }
 
   checkedCoordinates = (coordinates: {}) => {
@@ -82,119 +79,10 @@ class Model implements PModelInterface {
   };
 
 
-  changeFigure = ():string => {
+  changeFigure = () => {
     const typeFigure = this.typesFigures[Math.floor(Math.random() * this.typesFigures.length)];
     return typeFigure;
   };
-
-  drawCircle(coord = {}) {
-    const circle = new Graphics();
-
-    const randColor = this.rand();
-    const radius = 50;
-
-    const newCoord = this.checkedCoordinates(coord);
-    const { x, y } = newCoord;
-
-    circle.lineStyle(0);
-    circle.beginFill(this.colors[randColor], 1);
-
-    circle.drawCircle(x, y, radius);
-    circle.endFill();
-    this.basicBehavior(circle);
-    const area = Math.floor(Math.PI * (radius ** 2));
-    this.areaOfAllFigures += area;
-  }
-
-  drawSquare(coord = {}) {
-    const rectangle = new Graphics();
-    const randColor = this.rand();
-
-    const newCoord = this.checkedCoordinates(coord);
-    const { x, y } = newCoord;
-
-    rectangle.beginFill(this.colors[randColor], 1);
-    rectangle.drawRect(x, y, 100, 100);
-    rectangle.endFill();
-    this.basicBehavior(rectangle);
-    const area = (100 ** 2);
-    this.areaOfAllFigures += area;
-  }
-
-  drawPolygon(coord = {}) {
-    const polygon = new Graphics();
-    const randColor = this.rand();
-
-    const newCoord = this.checkedCoordinates(coord);
-    const { x, y } = newCoord;
-
-    polygon.beginFill(this.colors[randColor], 1);
-    polygon.drawPolygon([x, y, x + 100, y + 90, x + 180, y + 50,
-      x + 130, y + 200, x - 10, y + 150]);
-    polygon.endFill();
-    this.basicBehavior(polygon);
-  }
-
-  drawPolygonSecond(coord = {}) {
-    const polygon = new Graphics();
-    const randColor = this.rand();
-
-    const newCoord = this.checkedCoordinates(coord);
-    const { x, y } = newCoord;
-
-    polygon.beginFill(this.colors[randColor], 1);
-    polygon.drawPolygon([x, y, x + 100, y + 90, x + 180, y + 50,
-      x + 130, y + 200, x + 70, y + 130, x - 10, y + 150]);
-    polygon.endFill();
-    this.basicBehavior(polygon);
-  }
-
-  drawEllipse(coord = {}) {
-    const ellipse = new Graphics();
-    const randColor = this.rand();
-
-
-    const newCoord = this.checkedCoordinates(coord);
-    const { x, y } = newCoord;
-
-    ellipse.beginFill(this.colors[randColor], 1);
-    ellipse.drawEllipse(x, y, 80, 50);
-    ellipse.endFill();
-    this.basicBehavior(ellipse);
-
-    const area = Math.floor(Math.PI * 80 * 50);
-    this.areaOfAllFigures += area;
-  }
-
-  drawTriangle(coord = {}) {
-    const triangle = new Graphics();
-    const randColor = this.rand();
-    const newCoord = this.checkedCoordinates(coord);
-    const { x, y } = newCoord;
-
-    triangle.beginFill(this.colors[randColor], 1);
-    triangle.moveTo(x, y);
-    triangle.lineTo(x + 200, y);
-    triangle.lineTo(x + 50, y + 50);
-    triangle.lineTo(x, y);
-    triangle.closePath();
-    triangle.endFill();
-
-    this.basicBehavior(triangle);
-  }
-
-  drawStar(coord = {}) {
-    const star = new Graphics();
-    const randColor = this.rand();
-
-    const newCoord = this.checkedCoordinates(coord);
-    const { x, y } = newCoord;
-
-    star.beginFill(this.colors[randColor], 1);
-    star.drawStar(x, y, 5, 50);
-    star.endFill();
-    this.basicBehavior(star);
-  }
 }
 
 const figuresModel: any = new Model();

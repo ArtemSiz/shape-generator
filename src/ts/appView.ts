@@ -1,11 +1,16 @@
+import { Graphics } from 'pixi.js';
+
 import figuresModel from './appModel';
 
 class View implements PViewInterface {
-
   gravity: number;
+
   generationRate: number;
+
   displayNumberOfFigures: HTMLInputElement;
+
   displayAreaOfAllFigures: HTMLInputElement;
+
   interval: any;
 
   constructor() {
@@ -21,7 +26,8 @@ class View implements PViewInterface {
   }
 
   updateDisplay() {
-    figuresModel[figuresModel.changeFigure()]();
+    const typeFigure = figuresModel.changeFigure();
+    (this as any)[typeFigure]();
     this.displayNumberOfFigures.value = figuresModel.figuresAmount;
     this.displayAreaOfAllFigures.value = figuresModel.areaOfAllFigures;
   }
@@ -31,14 +37,123 @@ class View implements PViewInterface {
     this.interval = setInterval(() => this.updateDisplay(), this.generationRate);
   }
 
+  drawCircle(coord = {}) {
+    const circle = new Graphics();
+
+    const randColor = figuresModel.rand();
+    const radius = 50;
+
+    const newCoord = figuresModel.checkedCoordinates(coord);
+    const { x, y } = newCoord;
+
+    circle.lineStyle(0);
+    circle.beginFill(figuresModel.colors[randColor], 1);
+
+    circle.drawCircle(x, y, radius);
+    circle.endFill();
+    figuresModel.basicBehavior(circle);
+    const area = Math.floor(Math.PI * (radius ** 2));
+    figuresModel.areaOfAllFigures += area;
+  }
+
+  drawSquare(coord = {}) {
+    const rectangle = new Graphics();
+    const randColor = figuresModel.rand();
+
+    const newCoord = figuresModel.checkedCoordinates(coord);
+    const { x, y } = newCoord;
+
+    rectangle.beginFill(figuresModel.colors[randColor], 1);
+    rectangle.drawRect(x, y, 100, 100);
+    rectangle.endFill();
+    figuresModel.basicBehavior(rectangle);
+    const area = (100 ** 2);
+    figuresModel.areaOfAllFigures += area;
+  }
+
+  drawPolygon(coord = {}) {
+    const polygon = new Graphics();
+    const randColor = figuresModel.rand();
+
+    const newCoord = figuresModel.checkedCoordinates(coord);
+    const { x, y } = newCoord;
+
+    polygon.beginFill(figuresModel.colors[randColor], 1);
+    polygon.drawPolygon([x, y, x + 100, y + 90, x + 180, y + 50,
+      x + 130, y + 200, x - 10, y + 150]);
+    polygon.endFill();
+    figuresModel.basicBehavior(polygon);
+  }
+
+  drawPolygonSecond(coord = {}) {
+    const polygon = new Graphics();
+    const randColor = figuresModel.rand();
+
+    const newCoord = figuresModel.checkedCoordinates(coord);
+    const { x, y } = newCoord;
+
+    polygon.beginFill(figuresModel.colors[randColor], 1);
+    polygon.drawPolygon([x, y, x + 100, y + 90, x + 180, y + 50,
+      x + 130, y + 200, x + 70, y + 130, x - 10, y + 150]);
+    polygon.endFill();
+    figuresModel.basicBehavior(polygon);
+  }
+
+  drawEllipse(coord = {}) {
+    const ellipse = new Graphics();
+    const randColor = figuresModel.rand();
+
+
+    const newCoord = figuresModel.checkedCoordinates(coord);
+    const { x, y } = newCoord;
+
+    ellipse.beginFill(figuresModel.colors[randColor], 1);
+    ellipse.drawEllipse(x, y, 80, 50);
+    ellipse.endFill();
+    figuresModel.basicBehavior(ellipse);
+
+    const area = Math.floor(Math.PI * 80 * 50);
+    figuresModel.areaOfAllFigures += area;
+  }
+
+  drawTriangle(coord = {}) {
+    const triangle = new Graphics();
+    const randColor = figuresModel.rand();
+    const newCoord = figuresModel.checkedCoordinates(coord);
+    const { x, y } = newCoord;
+
+    triangle.beginFill(figuresModel.colors[randColor], 1);
+    triangle.moveTo(x, y);
+    triangle.lineTo(x + 200, y);
+    triangle.lineTo(x + 50, y + 50);
+    triangle.lineTo(x, y);
+    triangle.closePath();
+    triangle.endFill();
+
+    figuresModel.basicBehavior(triangle);
+  }
+
+  drawStar(coord = {}) {
+    const star = new Graphics();
+    const randColor = figuresModel.rand();
+
+    const newCoord = figuresModel.checkedCoordinates(coord);
+    const { x, y } = newCoord;
+
+    star.beginFill(figuresModel.colors[randColor], 1);
+    star.drawStar(x, y, 5, 50);
+    star.endFill();
+    figuresModel.basicBehavior(star);
+  }
+
   loadGame() {
     this.createCanvas();
-    figuresModel[figuresModel.changeFigure()]();
+    const typeFigure = figuresModel.changeFigure();
+    (this as any)[typeFigure]();
     this.onSetInterval();
     // figuresModel.app.ticker.elapsedMS = this.generationRate;
 
     figuresModel.app.ticker.add(() => {
-      console.log('ticker 9');
       for (let i = 0; i < figuresModel.figuresAmount; i++) {
         figuresModel.figure[i].position.y += this.gravity;
       }

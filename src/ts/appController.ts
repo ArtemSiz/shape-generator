@@ -1,4 +1,3 @@
-/* global document */
 import figuresModel from './appModel';
 import figuresView from './appView';
 
@@ -9,7 +8,8 @@ class Controller implements PControllerInterface {
   // }
   onCreateFigure(e: any) {
     figuresModel.newPosition = true;
-    figuresModel[figuresModel.changeFigure()](e.data.global);
+    const typeFigure = figuresModel.changeFigure();
+    (figuresView as any)[typeFigure](e.data.global);
   }
 
   reduceGenerationRate() {
@@ -23,16 +23,16 @@ class Controller implements PControllerInterface {
     figuresView.onSetInterval();
   }
 
-  static reduceGravity() {
+  reduceGravity() {
     figuresView.gravity -= 1;
   }
 
-  static increaseGravity() {
+  increaseGravity() {
     figuresView.gravity += 1;
   }
 
   onClick = (event: MouseEvent) => {
-    const action = (event.target as HTMLElement).dataset.action;
+    const { action } = (event.target as HTMLElement).dataset;
     if (action) {
       (this as any)[action]();
     }
