@@ -1,7 +1,5 @@
-import figuresModel from './appModel';
-import figuresView from './appView';
-import figuresController from './appController';
+import Controller from './appController';
+import Model from './appModel';
+import View from './appView';
 
-figuresModel.app.stage.on('pointerdown', figuresController.onCreateFigure);
-
-figuresView.loadGame();
+const figuresController: any = new Controller(new Model(), new View());

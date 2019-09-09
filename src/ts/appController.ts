@@ -1,34 +1,42 @@
-import figuresModel from './appModel';
-import figuresView from './appView';
+export default class Controller implements PControllerInterface {
+  figuresModel: any;
 
-class Controller implements PControllerInterface {
-  // clearFigure() {
-  //   this.clear();
-  //   // console.log('clearFigure()');
-  // }
+  figuresView: any;
+
+  controlPanel: HTMLDivElement;
+
+  constructor(model?: any, view?: any) {
+    this.figuresModel = model;
+    this.figuresView = view;
+    this.controlPanel = <HTMLDivElement>document.querySelector('.control-panel-wrapper');
+    this.controlPanel.addEventListener('click', (e: MouseEvent) => this.onClick(e));
+  }
+
   onCreateFigure(e: any) {
-    figuresModel.newPosition = true;
-    const typeFigure = figuresModel.changeFigure();
-    (figuresView as any)[typeFigure](e.data.global);
+    console.log('click 7777');
+    console.log('e', e);
+    // this.figuresModel.newPosition = true;
+    const typeFigure = this.figuresModel.changeFigure();
+    (this.figuresView as any)[typeFigure](e.data.global);
   }
 
   reduceGenerationRate() {
-    figuresView.generationRate += 100;
-    figuresView.onSetInterval();
+    this.figuresView.generationRate += 100;
+    this.figuresView.onSetInterval();
   }
 
   increaseGenerationRate() {
-    figuresView.generationRate -= 100;
-    if (figuresView.generationRate <= 0) figuresView.generationRate = 0;
-    figuresView.onSetInterval();
+    this.figuresView.generationRate -= 100;
+    if (this.figuresView.generationRate <= 0) this.figuresView.generationRate = 0;
+    this.figuresView.onSetInterval();
   }
 
   reduceGravity() {
-    figuresView.gravity -= 1;
+    this.figuresView.gravity -= 1;
   }
 
   increaseGravity() {
-    figuresView.gravity += 1;
+    this.figuresView.gravity += 1;
   }
 
   onClick = (event: MouseEvent) => {
@@ -38,9 +46,3 @@ class Controller implements PControllerInterface {
     }
   };
 }
-
-const figuresController: any = new Controller();
-const controlPanel: HTMLDivElement = <HTMLDivElement>document.querySelector('.control-panel-wrapper');
-controlPanel.addEventListener('click', (e: MouseEvent) => figuresController.onClick(e));
-
-export default figuresController;

@@ -1,7 +1,8 @@
 import { Application, Graphics, Sprite } from 'pixi.js';
+
 import AbstractFigureClass from './classes/abstractFigure.class';
 
-class Model implements PModelInterface {
+export default class Model implements PModelInterface {
   width: number;
 
   height: number;
@@ -39,7 +40,6 @@ class Model implements PModelInterface {
     this.background.width = this.app.screen.width;
     this.background.height = this.app.screen.height;
     this.app.stage.interactive = true;
-
     this.colors = [0xFFFF0B, 0xFF700B, 0x4286f4, 0x4286f4, 0xf441e8, 0x8dff6d, 0x41ccc9, 0xe03375,
       0x95e032, 0x77c687, 0x43ba5b, 0x0ea3ba];
     this.typesFigures = ['drawCircle', 'drawSquare', 'drawPolygon', 'drawPolygonSecond', 'drawEllipse', 'drawTriangle', 'drawStar'];
@@ -80,7 +80,3 @@ class Model implements PModelInterface {
     return typeFigure;
   };
 }
-
-const figuresModel: any = new Model();
-
-export default figuresModel;
