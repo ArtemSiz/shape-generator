@@ -1,5 +1,4 @@
 import { Application, Graphics, Sprite } from 'pixi.js';
-// import CustomGraficsClass from './classes/customGrafics.class';
 import AbstractFigureClass from './classes/abstractFigure.class';
 
 class Model implements PModelInterface {
@@ -56,14 +55,10 @@ class Model implements PModelInterface {
 
   basicBehavior(shape: AbstractFigureClass) {
     const newShape = shape;
-    newShape.interactive = true;
-    newShape.buttonMode = true;
     this.figuresAmount += 1;
     newShape.num = this.figuresAmount;
     this.figure.push(newShape);
     this.app.stage.addChild(newShape);
-    // shape.on('pointerdown', figuresController.clearFigure.bind(this));
-    // newShape.on('pointerdown', () => newShape.clear());
   }
 
   checkedCoordinates = (coordinates: {}) => {

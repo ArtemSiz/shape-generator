@@ -9,6 +9,8 @@ export default class AbstractFigureClass extends Graphics {
 
   constructor(coordX: number, coordY: number) {
     super();
+    this.interactive = true;
+    this.buttonMode = true;
     this.coordX = coordX;
     this.coordY = coordY;
     this.on('pointerdown', () => this.clear());

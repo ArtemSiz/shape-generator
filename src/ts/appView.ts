@@ -1,7 +1,5 @@
-import { Graphics } from 'pixi.js';
-
 import figuresModel from './appModel';
-import AbstractFigureClass from "./classes/abstractFigure.class";
+import AbstractFigureClass from './classes/abstractFigure.class';
 
 class View implements PViewInterface {
   gravity: number;
