@@ -1,6 +1,7 @@
 import { Application, Graphics, Sprite } from 'pixi.js';
 
 import AbstractFigureClass from './classes/abstractFigure.class';
+import PModelInterface from './interfaces/pModel.interface';
 
 export default class Model implements PModelInterface {
   width: number;
@@ -25,6 +26,10 @@ export default class Model implements PModelInterface {
 
   areaOfAllFigures: number;
 
+  gravity: number;
+
+  generationRate: number;
+
   constructor() {
     this.width = 800;
     this.height = 400;
@@ -48,6 +53,8 @@ export default class Model implements PModelInterface {
     this.figure = [];
     this.figuresAmount = -1;
     this.areaOfAllFigures = 0;
+    this.gravity = 4;
+    this.generationRate = 500;
   }
 
 
@@ -73,6 +80,23 @@ export default class Model implements PModelInterface {
     newCoord = coordinates;
     return newCoord;
   };
+
+  reduceGravity() {
+    this.gravity -= 1;
+  }
+
+  increaseGravity() {
+    this.gravity += 1;
+  }
+
+  reduceGenerationRate() {
+    this.generationRate += 100;
+  }
+
+  increaseGenerationRate() {
+    this.generationRate -= 100;
+    if (this.generationRate <= 0) this.generationRate = 0;
+  }
 
 
   changeFigure = () => {

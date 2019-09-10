@@ -1,10 +1,7 @@
 import AbstractFigureClass from './classes/abstractFigure.class';
+import PViewInterface from './interfaces/PView.interface';
 
 export default class View implements PViewInterface {
-  gravity: number;
-
-  generationRate: number;
-
   displayNumberOfFigures: HTMLInputElement;
 
   displayAreaOfAllFigures: HTMLInputElement;
@@ -15,8 +12,8 @@ export default class View implements PViewInterface {
 
   constructor(model: any) {
     this.figuresModel = model;
-    this.gravity = 4;
-    this.generationRate = 500;
+
+
     this.displayNumberOfFigures = <HTMLInputElement>document.getElementById('number-of-figures');
     this.displayAreaOfAllFigures = <HTMLInputElement>document.getElementById('total-area-of-figures');
     this.interval = null;
@@ -37,7 +34,7 @@ export default class View implements PViewInterface {
 
   onSetInterval() {
     if (this.interval) clearInterval(this.interval);
-    this.interval = setInterval(() => this.updateDisplay(), this.generationRate);
+    this.interval = setInterval(() => this.updateDisplay(), this.figuresModel.generationRate);
   }
 
   drawCircle(coord = {}) {
@@ -148,8 +145,8 @@ export default class View implements PViewInterface {
     this.onSetInterval();
 
     this.figuresModel.app.ticker.add(() => {
-      for (let i = 0; i < this.figuresModel.figuresAmount; i++) {
-        this.figuresModel.figure[i].position.y += this.gravity;
+      for (let i = 0; i < this.figuresModel.figuresAmount; i += 1) {
+        this.figuresModel.figure[i].position.y += this.figuresModel.gravity;
       }
     });
   }

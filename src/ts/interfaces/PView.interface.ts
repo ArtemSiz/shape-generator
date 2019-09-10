@@ -1,7 +1,6 @@
-interface PViewInterface {
-  gravity: number;
-  generationRate: number;
+export default interface PViewInterface {
   displayNumberOfFigures: HTMLInputElement;
   displayAreaOfAllFigures: HTMLInputElement;
   interval: any;
+  figuresModel: any;
 }

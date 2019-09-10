@@ -1,3 +1,5 @@
+import PControllerInterface from './interfaces/pController.interface';
+
 export default class Controller implements PControllerInterface {
   figuresModel: any;
 
@@ -19,23 +21,23 @@ export default class Controller implements PControllerInterface {
     (this.figuresView as any)[typeFigure](e.data.global);
   }
 
-  reduceGenerationRate() {
-    this.figuresView.generationRate += 100;
+
+  onReduceGenerationRate() {
+    this.figuresModel.reduceGenerationRate();
     this.figuresView.onSetInterval();
   }
 
-  increaseGenerationRate() {
-    this.figuresView.generationRate -= 100;
-    if (this.figuresView.generationRate <= 0) this.figuresView.generationRate = 0;
+  onIncreaseGenerationRate() {
+    this.figuresModel.increaseGenerationRate();
     this.figuresView.onSetInterval();
   }
 
-  reduceGravity() {
-    this.figuresView.gravity -= 1;
+  onReduceGravity() {
+    this.figuresModel.reduceGravity();
   }
 
-  increaseGravity() {
-    this.figuresView.gravity += 1;
+  onIncreaseGravity() {
+    this.figuresModel.increaseGravity();
   }
 
   onClick = (event: MouseEvent) => {
