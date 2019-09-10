@@ -1,4 +1,3 @@
-import Model from './appModel';
 import AbstractFigureClass from './classes/abstractFigure.class';
 
 export default class View implements PViewInterface {
@@ -14,10 +13,8 @@ export default class View implements PViewInterface {
 
   figuresModel: any;
 
-
-  constructor() {
-    this.figuresModel = new Model();
-    // this.figuresController = new Controller();
+  constructor(model: any) {
+    this.figuresModel = model;
     this.gravity = 4;
     this.generationRate = 500;
     this.displayNumberOfFigures = <HTMLInputElement>document.getElementById('number-of-figures');
@@ -25,8 +22,6 @@ export default class View implements PViewInterface {
     this.interval = null;
 
     this.loadGame();
-    console.log('this.figuresModel.app.stage ==', this.figuresModel.app.stage);
-    this.figuresModel.app.stage.on('pointerdown', () => console.log('click from appModel.ts'));
   }
 
   createCanvas() {

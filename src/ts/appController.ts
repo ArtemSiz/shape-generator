@@ -5,17 +5,16 @@ export default class Controller implements PControllerInterface {
 
   controlPanel: HTMLDivElement;
 
-  constructor(model?: any, view?: any) {
+  constructor(model: any, view?: any) {
     this.figuresModel = model;
     this.figuresView = view;
     this.controlPanel = <HTMLDivElement>document.querySelector('.control-panel-wrapper');
     this.controlPanel.addEventListener('click', (e: MouseEvent) => this.onClick(e));
+
+    this.figuresModel.app.stage.on('pointerdown', (e: MouseEvent) => this.onCreateFigure(e));
   }
 
   onCreateFigure(e: any) {
-    console.log('click 7777');
-    console.log('e', e);
-    // this.figuresModel.newPosition = true;
     const typeFigure = this.figuresModel.changeFigure();
     (this.figuresView as any)[typeFigure](e.data.global);
   }
