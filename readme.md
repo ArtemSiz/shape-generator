@@ -9,5 +9,6 @@ The application has a file [package.json][], what allows you to use the
 
 ## Webpack instructions
 
-Command for development: **npm run dev**
-Command for build: **npm run build**
+##### Command for development: **npm run dev**
+
+##### Command for build: **npm run build**
